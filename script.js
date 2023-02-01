@@ -91,11 +91,12 @@ const renderCurrentTimeZoneDetails = async (lat, long)=>{
 
     // Rendering Entered Address's TimeZone
 const renderEnteredAddressContainer = (weather) =>{
-    displayResult.style.display = 'block';
-    enteredTimeZoneMsg.style.display = 'none';
     while(enteredTimeZone.firstChild){
         enteredTimeZone.removeChild(enteredTimeZone.firstChild);
     }
+    displayResult.style.display = 'block';
+    enteredTimeZoneMsg.style.display = 'none';
+    Address.value = "";
     const data = [
         {
             label:"Name of Time Zone: ",
