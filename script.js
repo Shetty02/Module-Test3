@@ -65,7 +65,6 @@ const renderCurrentTimezoneContainer = (weather) =>{
         const label = document.createElement('span');
         const value = document.createElement('span');
 
-        div.classList.add("divContainer")
         label.textContent = weatherObj.label;
         value.textContent = weatherObj.data;
 
@@ -94,6 +93,9 @@ const renderCurrentTimeZoneDetails = async (lat, long)=>{
 const renderEnteredAddressContainer = (weather) =>{
     displayResult.style.display = 'block';
     enteredTimeZoneMsg.style.display = 'none';
+    while(enteredTimeZone.firstChild){
+        enteredTimeZone.removeChild(enteredTimeZone.firstChild);
+    }
     const data = [
         {
             label:"Name of Time Zone: ",

@@ -65,9 +65,7 @@ body{
     border: 1px solid;
     padding: 15px;
 }
-.divContainer{
-    gap: 15px;
-}
+
 #enteredTimeZoneMsg{
     color: red;
     display: flex;
