@@ -6,9 +6,14 @@ const baseUrl = 'https://api.geoapify.com/v1/geocode/reverse',
       enteredTimeZone = document.getElementById('enteredTimeZone'),
       enteredTimeZoneMsg = document.getElementById('enteredTimeZoneMsg');
 
-      const locationPromise = new Promise((resolve, reject)=>{
+
+
+const locationPromise = new Promise((resolve, reject)=>{
     navigator.geolocation.getCurrentPosition(resolve);
 })
+
+
+// Rendering Current TimeZone
 const renderCurrentTimezoneContainer = (weather) =>{
     currentTimeZone.style.display = 'block';
     const data = [
@@ -70,6 +75,22 @@ const renderCurrentTimezoneContainer = (weather) =>{
         currentTimeZone.appendChild(div);
     })
 }
+const renderCurrentTimeZoneDetails = async (lat, long)=>{
+
+    // https://api.geoapify.com/v1/geocode/reverse?lat=21.6248&lon=73.003&format=json&apiKey=da2c337686044397bb3bdf5d5d30d2b2
+        const url = `${baseUrl}?lat=${lat}&lon=${long}&format=json&apiKey=da2c337686044397bb3bdf5d5d30d2b2`
+        const res = await fetch(url);
+        const data = await res.json();
+    
+        // console.log("weather Details",data.results[0])
+        // console.log("weather Details",data)
+    
+        renderCurrentTimezoneContainer(data.results[0]);
+    }
+
+
+
+    // Rendering Entered Address's TimeZone
 const renderEnteredAddressContainer = (weather) =>{
     displayResult.style.display = 'block';
     enteredTimeZoneMsg.style.display = 'none';
@@ -132,7 +153,6 @@ const renderEnteredAddressContainer = (weather) =>{
         enteredTimeZone.appendChild(div);
     })
 }
-
 const renderAddressDetails = async ()=>{
     const address = Address.value;
     // `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=YOUR_API_KEY`
@@ -148,18 +168,8 @@ const renderAddressDetails = async ()=>{
 
     renderEnteredAddressContainer(data);
 }
-const renderCurrentTimeZoneDetails = async (lat, long)=>{
 
-// https://api.geoapify.com/v1/geocode/reverse?lat=21.6248&lon=73.003&format=json&apiKey=da2c337686044397bb3bdf5d5d30d2b2
-    const url = `${baseUrl}?lat=${lat}&lon=${long}&format=json&apiKey=da2c337686044397bb3bdf5d5d30d2b2`
-    const res = await fetch(url);
-    const data = await res.json();
-
-    // console.log("weather Details",data.results[0])
-    // console.log("weather Details",data)
-
-    renderCurrentTimezoneContainer(data.results[0]);
-}
+// Fetching user's Location
 const fetchUserLocation = async()=>{
     const data = await locationPromise;
     console.log("location", data);
